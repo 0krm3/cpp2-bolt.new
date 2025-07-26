@@ -182,7 +182,18 @@ function App() {
 
       switch (activeTab) {
         case 'dashboard':
-          return <AdminDashboard employees={employees} />;
+          return (
+            <AdminDashboard 
+              employees={employees}
+              onAddEmployee={handleEmployeeAdd}
+              onCalculatePayroll={() => {
+                const currentMonth = new Date().getMonth() + 1;
+                const currentYear = new Date().getFullYear();
+                handlePayrollCalculate(currentMonth.toString(), currentYear);
+              }}
+              onBulkUpload={handleBulkUpload}
+            />
+          );
         case 'employees':
           return (
             <EmployeeList
@@ -228,7 +239,12 @@ function App() {
       switch (activeTab) {
         case 'payslip':
           if (currentEmployee) {
-            return <PayslipView employee={currentEmployee} />;
+            return (
+              <PayslipView 
+                employee={currentEmployee} 
+                payrollRecords={payrollRecords}
+              />
+            );
           } else {
             return (
               <div className="text-center py-12">

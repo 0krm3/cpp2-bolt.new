@@ -5,9 +5,17 @@ import { formatCurrency } from '../../utils/payrollCalculations';
 
 interface AdminDashboardProps {
   employees: Employee[];
+  onAddEmployee: () => void;
+  onCalculatePayroll: () => void;
+  onBulkUpload: () => void;
 }
 
-const AdminDashboard: React.FC<AdminDashboardProps> = ({ employees }) => {
+const AdminDashboard: React.FC<AdminDashboardProps> = ({ 
+  employees, 
+  onAddEmployee, 
+  onCalculatePayroll, 
+  onBulkUpload 
+}) => {
   const activeEmployees = employees.filter(emp => emp.isActive);
   const totalSalary = activeEmployees.reduce((sum, emp) => sum + emp.baseSalary, 0);
   const averageSalary = activeEmployees.length > 0 ? totalSalary / activeEmployees.length : 0;
@@ -166,7 +174,10 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ employees }) => {
         </div>
         <div className="p-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <button className="flex items-center justify-center px-4 py-6 border-2 border-dashed border-gray-300 rounded-lg hover:border-gray-400 hover:bg-gray-50 transition-colors duration-200">
+            <button 
+              onClick={onAddEmployee}
+              className="flex items-center justify-center px-4 py-6 border-2 border-dashed border-gray-300 rounded-lg hover:border-gray-400 hover:bg-gray-50 transition-colors duration-200"
+            >
               <div className="text-center">
                 <Users className="h-8 w-8 text-gray-400 mx-auto mb-2" />
                 <p className="text-sm font-medium text-gray-900">新規従業員登録</p>
@@ -174,7 +185,10 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ employees }) => {
               </div>
             </button>
             
-            <button className="flex items-center justify-center px-4 py-6 border-2 border-dashed border-gray-300 rounded-lg hover:border-gray-400 hover:bg-gray-50 transition-colors duration-200">
+            <button 
+              onClick={onCalculatePayroll}
+              className="flex items-center justify-center px-4 py-6 border-2 border-dashed border-gray-300 rounded-lg hover:border-gray-400 hover:bg-gray-50 transition-colors duration-200"
+            >
               <div className="text-center">
                 <Calculator className="h-8 w-8 text-gray-400 mx-auto mb-2" />
                 <p className="text-sm font-medium text-gray-900">給与計算実行</p>
@@ -182,7 +196,10 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ employees }) => {
               </div>
             </button>
             
-            <button className="flex items-center justify-center px-4 py-6 border-2 border-dashed border-gray-300 rounded-lg hover:border-gray-400 hover:bg-gray-50 transition-colors duration-200">
+            <button 
+              onClick={onBulkUpload}
+              className="flex items-center justify-center px-4 py-6 border-2 border-dashed border-gray-300 rounded-lg hover:border-gray-400 hover:bg-gray-50 transition-colors duration-200"
+            >
               <div className="text-center">
                 <FileText className="h-8 w-8 text-gray-400 mx-auto mb-2" />
                 <p className="text-sm font-medium text-gray-900">CSV一括登録</p>
